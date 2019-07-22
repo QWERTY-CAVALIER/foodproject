@@ -11,17 +11,32 @@ import Camera from 'react-native-camera'
 
 export default function LinksScreen() {
   return (
-    <View style={styles.container}>
-        <Camera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          type={Camera.constants.Type.back}
-          aspect={Camera.constants.Aspect.fill}>
-        </Camera>
-      </View>
+    <CameraScreen/>
   );
+}
+
+class CameraScreen extends Component{
+  //构造函数
+  constructor(props) {
+      super(props);
+      this.state = {
+            cameraType: Camera.constants.Type.back
+      };
+  }
+  render(){
+    return (
+      <View style={styles.container}>
+          <Camera
+            ref={(cam) => {
+              this.camera = cam;
+            }}
+            style={styles.preview}
+            type={this.state.cameraType}
+            aspect={Camera.constants.Aspect.fill}>
+          </Camera>
+        </View>
+    );
+  }
 }
 
 LinksScreen.navigationOptions = {
