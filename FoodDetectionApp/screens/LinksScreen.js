@@ -1,16 +1,26 @@
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, 
+  StyleSheet, 
+  AppRegistry,
+  Dimensions,
+  Text,
+  TouchableHighlight,
+  View } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+import Camera from 'react-native-camera'
 
 export default function LinksScreen() {
   return (
-    <ScrollView style={styles.container}>
-      {/**
-       * Go ahead and delete ExpoLinksView and replace it with your content;
-       * we just wanted to provide you with some helpful links.
-       */}
-      <ExpoLinksView />
-    </ScrollView>
+    <View style={styles.container}>
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          style={styles.preview}
+          type={Camera.constants.Type.back}
+          aspect={Camera.constants.Aspect.fill}>
+        </Camera>
+      </View>
   );
 }
 
@@ -24,4 +34,10 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  preview: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+  }
 });
