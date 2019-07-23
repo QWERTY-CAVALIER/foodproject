@@ -7,7 +7,7 @@ import { ScrollView,
   TouchableHighlight,
   View } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-import Camera from 'react-native-camera'
+import RNCamera from 'react-native-camera'
 
 export default function LinksScreen() {
   return (
@@ -20,20 +20,20 @@ class CameraScreen extends Component{
   constructor(props) {
       super(props);
       this.state = {
-            cameraType: Camera.constants.Type.back
+            cameraType: RNCamera.constants.Type.back
       };
   }
   render(){
     return (
       <View style={styles.container}>
-          <Camera
+          <RNCamera
             ref={(cam) => {
               this.camera = cam;
             }}
             style={styles.preview}
             type={this.state.cameraType}
-            aspect={Camera.constants.Aspect.fill}>
-          </Camera>
+            aspect={RNCamera.constants.Aspect.fill}
+          />
         </View>
     );
   }
