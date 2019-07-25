@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,7 +16,7 @@ import {
   StatusBar,
 } from 'react-native';
 
-import RNCamera from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 
 const App = () => {
   return (
@@ -24,7 +24,7 @@ const App = () => {
   );
 };
 
-class CameraScreen extends Component{
+class App extends Component{
   //构造函数
   constructor(props) {
       super(props);
@@ -41,10 +41,30 @@ class CameraScreen extends Component{
           }}
           style={styles.preview}
           type={this.state.cameraType}
-          aspect={RNCamera.constants.Aspect.fill}
-        />
+          aspect={RNCamera.constants.Aspect.fill}>
+          <Text style={styles.button} onPress={this.switchCamera.bind(this)}>切换</Text>
+          <Text style={styles.button} onPress={this.takePicture.bind(this)}>拍照</Text>
+        </RNCamera>
       </View>
     );
+  }
+
+  switchCamera() {
+    var state = this.state;
+    if(state.cameraType === RNCamera.constants.Type.back) {
+      state.cameraType = RNCamera.constants.Type.front;
+    }else{
+      state.cameraType = RNCamera.constants.Type.back;
+    }
+    this.setState(state);
+  }
+ 
+  takePicture() {
+    this.camera.capture()
+      .then(function(data){
+        alert("saved in\n"+data.path)
+      })
+      .catch(err => console.error(err));
   }
 }
 
@@ -59,6 +79,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     flexDirection: 'row',
+  },
+  button: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    color: '#000',
+    padding: 10,
+    margin: 40,
   }
 });
 
